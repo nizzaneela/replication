@@ -7,6 +7,7 @@ unzip GEMF\ C\ FUTING.zip
 cd GEMF\ C\ FUTING/c/
 sed -i 's/TARGET = Gemfc_nrm/TARGET = gemfc_nrm/' Makefile
 sed -i 's/$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o/	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o -lm/' Makefile
+sed -i '14a\#include <stddef.h>' common.h
 
 
 
