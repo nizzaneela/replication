@@ -1,6 +1,6 @@
-# requirements
+# setup
 ## external components that require compiling
-GEMF, the epidemic simulation software Faryad D. Sahneh and Futing Fan, available from [Kansas State University](https://ece.k-state.edu//netse/software/).
+GEMF, the epidemic simulation software Faryad D. Sahneh and Futing Fan, available from [Kansas State University](https://ece.k-state.edu//netse/software/):
 ```
 wget https://ece.k-state.edu/netse/software/GEMF%20C%20FUTING.zip
 unzip GEMF\ C\ FUTING.zip
@@ -14,7 +14,7 @@ sudo mv gemfc_nrm /usr/local/bin
 Another version is available [here](https://github.com/niemasd/GEMF).
 
 ## included components that require compiling
-ba_gen is a simple C program that generates the edge list - `network..txt` - used by GEMF as the contact network
+ba_gen is a simple C program that generates an edge list in `network.txt` that is used by GEMF as the contact network:
 ```
 wget https://raw.githubusercontent.com/nizzaneela/replication/main/src/ba_gen.c
 gcc ba_gen.c -o ba_gen
