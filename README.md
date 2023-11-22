@@ -18,5 +18,5 @@ ba_gen is a simple C program that generates an edge list in `network.txt` that i
 ```
 wget https://raw.githubusercontent.com/nizzaneela/replication/main/src/ba_gen.c
 gcc ba_gen.c -o ba_gen
-sudo mv ba_gen* /usr/local/bin/
+sudo mv ba_gen /usr/local/bin/
 ```
