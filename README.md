@@ -5,6 +5,10 @@ GEMF, the epidemic simulation software Frahad Sadheh and Futing Fan
 wget https://ece.k-state.edu/netse/software/GEMF%20C%20FUTING.zip
 unzip GEMF\ C\ FUTING.zip
 cd GEMF\ C\ FUTING/c/
+sed -i 's/TARGET = Gemfc_nrm/TARGET = gemfc_nrm/' Makefile
+sed -i 's/$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o/	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o -lm/' Makefile
+
+
 
 
 
