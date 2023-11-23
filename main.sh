@@ -10,8 +10,6 @@ num_successes_required=$2
 
 source_dir="./main"
 
-total_failures=0
-
 work(){
     local dir="$1"
     local failures=0
@@ -34,13 +32,8 @@ work(){
 }
 
 for ((i=1; i<=$num_procs; i++)); do
-    dir="${source_dir}_proc$i"
-    cp -r "$source_dir/" "$dir"
-    if [ $i -le 2 ]; then
-        work1 "$dir" &
-    else
-        work2 "$dir" &
-    fi
+    cp -r "$source_dir/" "${source_dir}_proc$i"
+    work "$dir" &
 done
 
 wait
