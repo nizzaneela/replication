@@ -32,7 +32,8 @@ work(){
 }
 
 for ((i=1; i<=$num_procs; i++)); do
-    cp -r "$source_dir/" "${source_dir}_proc$i"
+    dir="${source_dir}_proc$i"
+    cp -r "$source_dir/" "$dir"
     work "$dir" &
 done
 
