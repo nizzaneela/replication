@@ -23,21 +23,26 @@ work(){
         local sus=$(tail -n 1 output.txt | awk '{print $6}')
         if [ "$sus" -lt 4999900 ]; then
             ((successes++))
+            ba_gen
         else
             ((failures++))
         fi
     done
     cd -
-    echo "$successes successes in directory $dir, $failures failures"
+    echo "gemfc_nrm: $successes successes in directory $dir, $failures failures"
+    echo "gemfc_nrm: directory $dir complete at $(date)"
 }
 
 for ((i=1; i<=$num_procs; i++)); do
     dir="${source_dir}_proc$i"
-    cp -r "$source_dir" "$dir"
-    work "$dir" &
+    cp -r "$source_dir/" "$dir"
+    if [ $i -le 2 ]; then
+        work1 "$dir" &
+    else
+        work2 "$dir" &
+    fi
 done
 
 wait
-((product = num_procs * num_successes_required))
+
 echo "All done!"
-echo "Total $product successes"
