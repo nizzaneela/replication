@@ -6,12 +6,12 @@ CC = gcc
 #  -Wall turns on most, but not all, compiler warnings
 #CFLAGS = -g -Wall
 CFLAGS = -Wall
-TARGET = Gemfc_nrm
+TARGET = gemfc_nrm
 all: $(TARGET)
 
 $(TARGET): $(TARGET).c nrm.o para.o common.o
 	rm -fr $(TARGET)
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o
+	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c nrm.o para.o common.o -lm
 
 nrm.o:  nrm.c nrm.h 
 	$(CC) $(CFLAGS) -c nrm.c
@@ -21,7 +21,7 @@ common.o:  common.c common.h
 	$(CC) $(CFLAGS) -c common.c
 
 clean:
-	rm -rf Gemfc_nrm
+	rm -rf $(TARGET)
 	rm -rf nrm.o
 	rm -rf common.o
 	rm -rf para.o
