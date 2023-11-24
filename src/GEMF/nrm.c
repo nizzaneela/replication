@@ -98,7 +98,7 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
     }
 
     // ***********************events happen***************************************
-    if( run->sim_rounds> 1){
+    if( 1 ){ //run->sim_rounds> 1){ - always store
         //save initial status
         p_nsim_avg_lst= malloc2Int(sts->M, run->interval_num+ 1);
         restore.init_lst= (size_t*)malloc1(graph->_e, sizeof(size_t));
@@ -269,16 +269,28 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
             heart_beat(&hb);
         }
         printf("stop simulation round [%zu/%zu]\n", round, run->sim_rounds);
-        if(++round> run->sim_rounds){
+        if(++round> run->sim_rounds && sts->init_cnt[0] <= 4999600){
             break;
         }
         //restore original status and run again
-        R= restore.R;
-        memcpy( sts->init_lst, restore.init_lst, sizeof(size_t)*(graph->_e));
-        memcpy( p_raw_rat_lst, restore.p_raw_rat_lst, sizeof(double)*(graph->_e));
-        for(layer= 0; layer< graph->L; layer++){
-            memcpy( p_inducer_cal_lst[layer], restore.p_inducer_cal_lst[layer],  sizeof(double)*(graph->_e));
+        for (size_t i = 0; i < graph->_e; ++i) {
+            sts->init_lst[i] = 0;
         }
+        size_t randomIndex = (size_t)((double)rand() / RAND_MAX * graph->_e);
+        sts->init_lst[randomIndex]=1;
+        p_inducer_cal_lst=  init_inducer( graph, sts, tran);
+        free( p_raw_rat_lst);
+        R= get_rat_lst( graph, tran, sts, &p_raw_rat_lst, p_inducer_cal_lst);
+        //R= restore.R;
+        //memcpy( sts->init_lst, restore.init_lst, sizeof(size_t)*(graph->_e));
+        //memcpy( p_raw_rat_lst, restore.p_raw_rat_lst, sizeof(double)*(graph->_e));
+        //for(layer= 0; layer< graph->L; layer++){
+        //    memcpy( p_inducer_cal_lst[layer], restore.p_inducer_cal_lst[layer],  sizeof(double)*(graph->_e));
+        //}
+        sts->init_cnt[0] = 4999999; // reset susceptible container numbers
+        sts->init_cnt[1] = 1; // reset exposed container numbers
+        sts->init_cnt[7] = 0; // reset exposed container numbers
+
         LOG(1, __FILE__, __LINE__, "End simulation round [%zu/%zu]\n", round, run->sim_rounds);
     }
     //post population
