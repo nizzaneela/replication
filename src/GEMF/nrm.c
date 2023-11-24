@@ -98,7 +98,7 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
     }
 
     // ***********************events happen***************************************
-    if( 1 ){ //run->sim_rounds> 1){ - always store
+    if( run->sim_rounds> 1){
         //save initial status
         p_nsim_avg_lst= malloc2Int(sts->M, run->interval_num+ 1);
         restore.init_lst= (size_t*)malloc1(graph->_e, sizeof(size_t));
@@ -150,7 +150,12 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
         while( 1){
             elapse_tim= heap.reaction[heap._s].t;
             if (run->max_time < elapse_tim){
-                printf("T [%.6g] \treach limit [%6g], stop at [%zu] events.\t", elapse_tim, run->max_time, count);
+                if (1.0 < elapse_tim){
+                    printf("Died out after [%zu] events.\t", count);
+                }
+                else {
+                    printf("T [%.6g] \treach limit [%6g], stop at [%zu] events.\t", elapse_tim, run->max_time, count);
+                }
                 break;
             }
             else if(count>= run->max_events){
@@ -272,7 +277,7 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
             }
             heart_beat(&hb);
         }
-        printf("stop simulation round [%zu/%zu]\n", round, run->sim_rounds);
+        printf("stop simulation attempt [%zu]\n", round);
         if(++round> run->sim_rounds &&
         sts->init_cnt[0] <= 4999600 &&
         (sts->init_cnt[1] + sts->init_cnt[2] + sts->init_cnt[3] +
