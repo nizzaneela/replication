@@ -14,7 +14,7 @@ void generate_barabasi_albert_graph(int n, int m, FILE *file) {
         exit(EXIT_FAILURE);
     }
 
-    // Initialize the graph with an initial connected seed
+    // Initialize the graph with a nine node star
     count = 0;
     for (i = 0; i < m; ++i) {
         edges[count] = m;
