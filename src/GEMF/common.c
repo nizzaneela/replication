@@ -84,7 +84,7 @@ int check_int_range( _LONG li){
     return 0;
 }
 //10 to the power of pow 
-_LONG exp10(int pow){
+_LONG my_exp(int pow){
     _LONG ret;
     int i;
     for(i= 0, ret= 1;i< pow&& i< MAX_INT_LEN; i++)
@@ -119,10 +119,10 @@ int kilobit_print( char* prefix, _LONG val, char* suffix){
         val= - val;
     }
     for(len= 1; len< MAX_INT_LEN; len++)
-        if(!(val/ exp10(len))) break;
+        if(!(val/ my_exp(len))) break;
     for(j= 0; j< len; j++){
-        div= (int)(val/ exp10( len- j- 1));
-        lef= val% exp10( len- j- 1);
+        div= (int)(val/ my_exp( len- j- 1));
+        lef= val% my_exp( len- j- 1);
         if(j== 0) printf("%c", '0'+ div);
         else{
             if(j% 3== len% 3) printf(",");

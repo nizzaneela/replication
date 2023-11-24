@@ -13,6 +13,9 @@
 #include <sys/time.h>
 #endif
 
+#include <stddef.h>
+#include <time.h>
+
 typedef char LINE[MAX_LINE_LEN];
 typedef long long _LONG;
 
@@ -138,7 +141,7 @@ void dump_graph(Graph* graph);
 void print_graph_size(Graph* graph);
 int check_int_range( _LONG li);
 //exponential
-_LONG exp10( int pow);
+_LONG my_exp( int pow);
 //print with kilobit
 int kilobit_print( char* prefix, _LONG val, char* suffix);
 //print time Hour:min:sec
