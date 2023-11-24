@@ -157,6 +157,10 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
                 printf("N [%zu] \treach limit [%zu], stop.\t", count, run->max_events);
                 break;
             }
+            else if(sts->init_cnt[0] <= 4950000){
+                printf("T [%.6g] \treach 50,000 infections at [%zu] events, stop.\t", elapse_tim, count);
+                break;
+            }
             //get a weighted radom node, ns-- active node, ni-- past_status, nj-- present_status
             evt.ns= heap.reaction[heap._s].n;
 
@@ -269,7 +273,10 @@ int nrm(Graph* graph, Transition* tran, Status* sts, Run* run){
             heart_beat(&hb);
         }
         printf("stop simulation round [%zu/%zu]\n", round, run->sim_rounds);
-        if(++round> run->sim_rounds && sts->init_cnt[0] <= 4999600){
+        if(++round> run->sim_rounds &&
+        sts->init_cnt[0] <= 4999600 &&
+        (sts->init_cnt[1] + sts->init_cnt[2] + sts->init_cnt[3] +
+        sts->init_cnt[4] + sts->init_cnt[5] + sts->init_cnt[6])){
             break;
         }
         //restore original status and run again
